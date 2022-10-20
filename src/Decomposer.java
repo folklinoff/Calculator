@@ -18,35 +18,22 @@ public class Decomposer {
     public static boolean isEnclosedInBraces(String expression)
     {
         int openingBraces = 0;
-        boolean firstBraceOpened = false, firstBraceClosed = false;
         for (int i = 0; i < expression.length(); ++i)
         {
             if (expression.charAt(i) == '(')
             {
-                if (firstBraceClosed)
-                {
-                    return false;
-                }
-                if (!firstBraceOpened)
-                {
-                    firstBraceOpened = true;
-                }
                 openingBraces++;
             }
             else if (expression.charAt(i) == ')')
             {
                 openingBraces--;
-                if (openingBraces == 0)
-                {
-                    firstBraceClosed = true;
-                }
             }
-            else if (firstBraceClosed || !firstBraceOpened)
+            else if (openingBraces == 0)
             {
                 return false;
             }
         }
-        return firstBraceOpened;
+        return true;
     }
 
     public static String removeOuterBraces(String expression)
@@ -101,6 +88,7 @@ public class Decomposer {
                 }
             }
         }
+
         return convertMultiplicationToTree(expression);
     }
 
