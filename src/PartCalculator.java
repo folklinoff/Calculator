@@ -1,8 +1,6 @@
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 public class PartCalculator {
     // possible combinations
@@ -13,20 +11,20 @@ public class PartCalculator {
     //
     public static void main(String[] args)
     {
-        TreeMap<Integer, Integer> map1 = new TreeMap<>();
+        Coefficients map1 = new Coefficients();
         map1.put(0,1);
         map1.put(1,1);
-        TreeMap<Integer, Integer> map2 = new TreeMap<>();
+        Coefficients map2 = new Coefficients();
         map2.put(0,1);
         map2.put(1,1);
-        TreeMap<Integer, Integer> sum = addTwoTrees(map1, map2);
-        TreeMap<Integer, Integer> mult = multiplyTwoTrees(map1, map2);
+        Coefficients sum = addTwoTrees(map1, map2);
+        Coefficients mult = multiplyTwoTrees(map1, map2);
     }
 
     @Contract(pure = true)
-    public static TreeMap<Integer, Integer> subtractTwoTrees(TreeMap<Integer, Integer> map1, TreeMap<Integer, Integer> map2)
+    public static Coefficients subtractTwoTrees(Coefficients map1, Coefficients map2)
     {
-        TreeMap<Integer, Integer> result = new TreeMap<>(map1);
+        Coefficients result = new Coefficients(map1);
         for (Map.Entry<Integer, Integer> entry : map2.entrySet())
         {
             if (result.containsKey(entry.getKey()))
@@ -42,9 +40,9 @@ public class PartCalculator {
     }
 
     @Contract(pure = true)
-    public static TreeMap<Integer, Integer> addTwoTrees(TreeMap<Integer, Integer> map1, TreeMap<Integer, Integer> map2)
+    public static Coefficients addTwoTrees(Coefficients map1, Coefficients map2)
     {
-        TreeMap<Integer, Integer> result = new TreeMap<>(map1);
+        Coefficients result = new Coefficients(map1);
         for (Map.Entry<Integer, Integer> entry : map2.entrySet())
         {
             if (result.containsKey(entry.getKey()))
@@ -60,9 +58,9 @@ public class PartCalculator {
     }
 
     @Contract(pure = true)
-    public static TreeMap<Integer, Integer> multiplyTwoTrees(TreeMap<Integer, Integer> map1, TreeMap<Integer, Integer> map2)
+    public static Coefficients multiplyTwoTrees(Coefficients map1, Coefficients map2)
     {
-        TreeMap<Integer, Integer> result = new TreeMap<>();
+        Coefficients result = new Coefficients();
         for (Map.Entry<Integer, Integer> entry1 : map1.entrySet())
         {
             for (Map.Entry<Integer, Integer> entry2 : map2.entrySet())

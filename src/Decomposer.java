@@ -41,10 +41,10 @@ public class Decomposer {
         return (new StringBuilder(expression)).substring(1, expression.length() - 1);
     }
 
-    public static TreeMap<Integer, Integer> decompose(String expression)
+    public static Coefficients decompose(String expression)
     {
         if (expression.length() == 0)
-            return new TreeMap<>();
+            return new Coefficients();
         if (isOperand(expression))
         {
             return Converter.convertToCoefficients(expression);
@@ -53,20 +53,26 @@ public class Decomposer {
         {
             expression = removeOuterBraces(expression);
         }
+        Coefficients result = convertAdditionToTree(expression);
         return convertAdditionToTree(expression);
     }
 
-    public static TreeMap<Integer, Integer> convertAdditionToTree(String expression)
+    public static Coefficients convertAdditionToTree(String expression)
     {
         int openingBraces = 0;
         boolean isOperand = true;
-        TreeMap<Integer, Integer> result = new TreeMap<>();
         for (int i = 0; i < expression.length(); ++i)
         {
+            if (expression.charAt(i) == '=')
+            {
+                Coefficients leftOperand = decompose(expression.substring(0, i));
+                Coefficients rightOperand = decompose(expression.substring(i + 1));
+                return PartCalculator.subtractTwoTrees(leftOperand, rightOperand);
+            }
             if ((expression.charAt(i) == '+' || expression.charAt(i) == '-') && openingBraces == 0)
             {
-                TreeMap<Integer, Integer> leftOperand = decompose(expression.substring(0, i));
-                TreeMap<Integer, Integer> rightOperand = decompose(expression.substring(i + 1));
+                Coefficients leftOperand = decompose(expression.substring(0, i));
+                Coefficients rightOperand = decompose(expression.substring(i + 1));
                 if (expression.charAt(i) == '+')
                 {
                     return PartCalculator.addTwoTrees(leftOperand, rightOperand);
@@ -92,16 +98,16 @@ public class Decomposer {
         return convertMultiplicationToTree(expression);
     }
 
-    public static TreeMap<Integer, Integer> convertMultiplicationToTree(String expression)
+    public static Coefficients convertMultiplicationToTree(String expression)
     {
         int openingBraces = 0;
-        TreeMap<Integer, Integer> result = new TreeMap<>();
+        Coefficients result = new Coefficients();
         for (int i = 0; i < expression.length(); ++i)
         {
             if (expression.charAt(i) == '*' && openingBraces == 0)
             {
-                TreeMap<Integer, Integer> leftOperand = decompose(expression.substring(0, i));
-                TreeMap<Integer, Integer> rightOperand = decompose(expression.substring(i + 1));
+                Coefficients leftOperand = decompose(expression.substring(0, i));
+                Coefficients rightOperand = decompose(expression.substring(i + 1));
 
                 return PartCalculator.multiplyTwoTrees(leftOperand, rightOperand);
             }
