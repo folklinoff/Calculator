@@ -47,11 +47,11 @@ public class Decomposer {
         {
             return Converter.convertToCoefficients(expression);
         }
-        Coefficients result = convertAdditionToTree(expression);
-        return convertAdditionToTree(expression);
+        Coefficients result = convertAdditionToCoefficients(expression);
+        return convertAdditionToCoefficients(expression);
     }
 
-    public static Coefficients convertAdditionToTree(String expression)
+    public static Coefficients convertAdditionToCoefficients(String expression)
     {
         int openingBraces = 0;
         boolean isOperand = true;
@@ -89,10 +89,10 @@ public class Decomposer {
             }
         }
 
-        return convertMultiplicationToTree(expression);
+        return convertMultiplicationToCoefficients(expression);
     }
 
-    public static Coefficients convertMultiplicationToTree(String expression)
+    public static Coefficients convertMultiplicationToCoefficients(String expression)
     {
         int openingBraces = 0;
         Coefficients result = new Coefficients();
