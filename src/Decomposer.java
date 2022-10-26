@@ -1,11 +1,3 @@
-import com.sun.source.tree.Tree;
-
-import javax.naming.InsufficientResourcesException;
-import javax.naming.StringRefAddr;
-import java.util.Objects;
-import java.util.SimpleTimeZone;
-import java.util.TreeMap;
-
 public class Decomposer {
     public static boolean isOperand(String expression)
     {
@@ -44,14 +36,16 @@ public class Decomposer {
     public static Coefficients decompose(String expression)
     {
         if (expression.length() == 0)
-            return new Coefficients();
-        if (isOperand(expression))
         {
-            return Converter.convertToCoefficients(expression);
+            return new Coefficients();
         }
         if (isEnclosedInBraces(expression))
         {
             expression = removeOuterBraces(expression);
+        }
+        if (isOperand(expression))
+        {
+            return Converter.convertToCoefficients(expression);
         }
         Coefficients result = convertAdditionToTree(expression);
         return convertAdditionToTree(expression);

@@ -1,36 +1,49 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Coefficients extends TreeMap<Integer, Integer> {
-    TreeMap<Integer, Integer> coefficients;
-
-
+    public TreeMap<Integer, Integer> coefficients;
     Coefficients()
     {
-        coefficients = new TreeMap<>(Comparator.reverseOrder());
+        super();
+        coefficients = new TreeMap<>();
     }
 
     Coefficients(Coefficients c1)
     {
         super(c1);
+        coefficients = c1.coefficients;
     }
 
-    public Integer put(Integer key, Integer value)
+    @Override
+    public Integer remove(Object key) {
+        return coefficients.remove(key);
+    }
+
+    @Override
+    public Integer put(Integer key, Integer value) {
+        return coefficients.put(key, value);
+    }
+
+    @Override
+    public Integer get(Object key) {
+        return coefficients.get(key);
+    }
+
+    @Override
+    public boolean containsKey(Object key) {
+        return coefficients.containsKey(key);
+    }
+
+    public Set<Map.Entry<Integer, Integer>> entrySet()
     {
-        return super.put(key, value);
-    }
-
-    public int get(int key)
-    {
-        return super.get(key);
-    }
-
-    public int size()
-    {
-        return super.size();
-    }
-
-    public Set<Map.Entry<Integer, Integer>> entrySet() {
-        return super.entrySet();
+        TreeSet<Map.Entry<Integer, Integer>> result = new TreeSet<>((o1, o2) -> {
+            if (o1.getKey() > o2.getKey())
+                return -1;
+            if (o1.getKey().equals(o2.getKey()))
+                return 0;
+            return 1;
+        });
+        result.addAll(coefficients.entrySet());
+        return result;
     }
 }

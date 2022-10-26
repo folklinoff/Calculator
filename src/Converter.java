@@ -1,7 +1,4 @@
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Converter {
     public static Coefficients convertToCoefficients(String operand)
@@ -46,10 +43,6 @@ public class Converter {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Integer, Integer> entry : coefficients.entrySet())
         {
-            if (entry.getValue() == 0)
-            {
-                continue;
-            }
             if (!first)
             {
                 if (entry.getValue() > 0)

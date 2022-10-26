@@ -1,4 +1,4 @@
-public class Transformer {
+public class ExpressionTransformer {
     public static String deleteSpaces(String expression)
     {
         StringBuilder exp = new StringBuilder();
